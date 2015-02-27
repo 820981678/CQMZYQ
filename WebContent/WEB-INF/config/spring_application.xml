@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<bean id="dbHandle" class="com.connection.db.DBHandle" depends-on="propertiesConfigurer" lazy-init="false" singleton="true" init-method="init">
+		<property name="configNames">
+			<set>
+				<value>default</value>
+			</set>
+		</property>
+		<property name="propertiesSource" ref="propertiesConfigurer" />
+	</bean>
+	
+	<bean id="globalCache" class="com.icapture.init.cache.GlobalCache" lazy-init="false">
+		<property name="cacheMap">
+			<map>
+				<entry key="label">
+					<bean class="com.icapture.init.cache.impl.LabelCache"></bean>
+				</entry>
+				<entry key="group">
+					<bean class="com.icapture.init.cache.impl.GroupCache"></bean>
+				</entry>
+			</map>
+		</property>
+		<property name="label" value="label"></property>
+		<property name="group" value="group"></property>
+	</bean>
+	
+	<bean id="menuConfig" class="com.icapture.init.configure.MenuConfig">
+		<property name="configPath">
+			<value>WEB-INF/config/menu.xml</value>
+		</property>
+	</bean>
+	
+</beans>
